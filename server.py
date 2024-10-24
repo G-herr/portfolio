@@ -1,7 +1,31 @@
 from flask import Flask, render_template, request, redirect
 import csv
+import smtplib
+from email.message import EmailMessage
+from string import Template
+from pathlib import Path
 
 app = Flask(__name__)
+
+def send_email(data):
+    input_email = data['email']
+    input_subject = data['subject']
+    input_message = data['message']
+    
+    html = Template(Path('mail_template.html').read_text())
+    email = EmailMessage()
+    email['from'] = 'CV website'
+    email['to'] = 'gherrera98r@gmail.com'
+    email['subject'] = 'NEW MESSAGE!!!'
+
+    email.set_content(html.substitute(email=input_email, subject=input_subject, message=input_message), 'html')
+
+    with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.login('dummypython178@gmail.com', 'rius yoha arho bkzt')
+        smtp.send_message(email)
+        print('SENT!')
 
 
 @app.route('/')
@@ -31,8 +55,42 @@ def submit_form():
         try:
             data = request.form.to_dict()
             write_to_csv(data)
+            send_email(data)
             return redirect('thankyou.html')
         except:
             return "Couldn't save to database. Please verify your information and try again."
     else:
-        return 'Something went wrong. Please try again.'
+        a1 = request.args.get('email')
+        a2 = request.args.get('subject')
+        a3 = request.args.get('message')
+        data = {'email': a1, 'subject': a2, 'message': a3}
+        write_to_csv(data)
+        send_email(data)
+        return redirect('thankyou.html')
+
+
+#Excersice on APIs 
+'''@app.route('/suma', methods=['POST'])
+def suma():
+    if request.method == 'POST':
+        try:
+            data = request.json
+            x = data.get('x')
+            if not x:
+                return "Dictionaty must contain key x"
+            if type(x) != list:
+                return "Input a list of numbers"
+            length = len(x)
+            if length == 0:
+                return "List should contain at least one value"
+            if type(x[0]) != int:
+                return 'Elements of list must be integers'
+            if length >= 5:
+                return "Cannot sum so many values!"
+            return f'{sum('hola')}'
+        except Exception as e:
+            return f'Error: {e}'
+            return "Couldn't save to database. Please verify your information and try again."
+    else:
+        return "Not accepted"
+'''
