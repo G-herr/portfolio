@@ -54,19 +54,28 @@ def submit_form():
     if request.method == 'POST':
         try:
             data = request.form.to_dict()
-            write_to_csv(data)
-            send_email(data)
-            return redirect('thankyou.html')
+            if data['email'] != '':
+                write_to_csv(data)
+                send_email(data)
+                return redirect('thankyou.html')
+            else:
+                return redirect('contact_error.html')
         except:
             return "Couldn't save to database. Please verify your information and try again."
     else:
-        a1 = request.args.get('email')
-        a2 = request.args.get('subject')
-        a3 = request.args.get('message')
-        data = {'email': a1, 'subject': a2, 'message': a3}
-        write_to_csv(data)
-        send_email(data)
-        return redirect('thankyou.html')
+        try:
+            a1 = request.args.get('email')
+            a2 = request.args.get('subject')
+            a3 = request.args.get('message')
+            data = {'email': a1, 'subject': a2, 'message': a3}
+            if a1 != '':
+                write_to_csv(data)
+                send_email(data)
+                return redirect('thankyou.html')
+            else:
+                return redirect('contact_error.html')
+        except:
+            return "Couldn't save to database. Please verify your information and try again."
 
 
 #Excersice on APIs 

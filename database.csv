@@ -1,2 +1,5 @@
 Email,Subject,Message
 prueba@prueba,sujeto,mensaje
+prueba@error,Prueba error,Prueba desde contact_error
+otra@prueba.error,Desde error,Otra desde contact error
+prueba@normal,Prueba normal,Contact normal
