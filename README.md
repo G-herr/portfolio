@@ -1,6 +1,6 @@
 # Portfolio
 
-Developed a [portfolio website](https://gustavohr.pythonanywhere.com/) using a Flask with a 'Contact Me' form that saves submissions to a CSV file and sends automated email notifications. Website: [GustavoHR.pythonanywhere.com](https://gustavohr.pythonanywhere.com/)
+[Portfolio website](https://gustavohr.pythonanywhere.com/) developed using a Flask with a 'Contact Me' form that saves submissions to a CSV file and sends automated email notifications. Website: [GustavoHR.pythonanywhere.com](https://gustavohr.pythonanywhere.com/)
 
 * **Framework:** Built with [Flask](https://flask.palletsprojects.com/en/stable/) to create a lightweight, Python-based backend for serving dynamic content and handling form submissions.
 * **Template Customization:** Modified an existing HTML/CSS template to create a clean, user-friendly portfolio showcasing my resume, projects, and contact details.
